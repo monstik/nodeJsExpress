@@ -14,19 +14,28 @@
             {{else}}
             <li>
             {{/if}}
-            <a href="/courses">Курссы</a>
+            <a href="/courses">Курсы</a>
         </li>
             {{#if isAdd}}
             <li class="active">
             {{else}}
             <li>
-            {{/if}}    <a href="/add">Добавить курс</a>
+            {{/if}}
+            <a href="/add">Добавить курс</a>
         </li>
             {{#if isCard}}
             <li class="active">
             {{else}}
             <li>
-            {{/if}}    <a href="/card">Корзина</a>
+            {{/if}}
+            <a href="/card">Корзина</a>
+        </li>
+            {{#if isOrders}}
+            <li class="active">
+            {{else}}
+            <li>
+            {{/if}}
+            <a href="/orders">Заказы</a>
         </li>
 
         </ul>

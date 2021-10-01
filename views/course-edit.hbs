@@ -1,6 +1,6 @@
 <h1>Редактировать курс - {{course.title}}</h1>
 
-<form action="/courses/edit" method="POST">
+<form class="course-form" action="/courses/edit" method="POST">
     <div class="input-field">
         <input id="title" name="title" type="text" class="validate" required value="{{course.title}}">
         <label for="title">Название курса</label>
@@ -17,5 +17,10 @@
 <!--        <span class="helper-text" data-error="Введите URL картинки">Helper text</span>-->
     </div>
     <input type="hidden" name="id" value="{{course.id}}">
-    <button class="btn btn-primary">Редактировать курс</button>
+    <button type="submit" class="btn btn-primary">Редактировать курс</button>
+</form>
+
+<form action="/courses/remove" method="post">
+    <input type="hidden" name="id" value="{{course.id}}">
+    <button type="submit" class="btn red">Удалить</button>
 </form>
