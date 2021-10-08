@@ -1,0 +1,36 @@
+<div class="row">
+
+    {{#if resetPasswordError}}
+        <p class="alert">{{resetPasswordError}}</p>
+    {{/if}}
+
+    {{#if resetSuccess}}
+    <div id="reset" class="col s12">
+
+
+
+
+        <h1>Сообщение отправлено на почту</h1>
+
+        <p>для сброса пароля перейдите по ссылке из сообщения</p>
+
+    {{else}}
+        <div id="reset" class="col s6 offset-s3">
+        <h1>Сброс пароля</h1>
+
+        <form action="/auth/reset" method="POST">
+            <div class="input-field">
+                <input id="email" name="email" type="email" class="validate" required>
+                <label for="email">Введите email</label>
+                <span class="helper-text" data-error="Введите email"></span>
+            </div>
+
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+
+            <button type="submit" class="btn btn-primary">Сбросить</button>
+        </form>
+
+
+    </div>
+    {{/if}}
+</div>

@@ -1,4 +1,4 @@
-const toCurrency = price =>{
+const toCurrency = price => {
     return new Intl.NumberFormat('en-US', {
         currency: 'USD',
         style: 'currency'
@@ -6,7 +6,7 @@ const toCurrency = price =>{
 };
 
 const toDate = date => {
-    return new Intl.DateTimeFormat('en-US',{
+    return new Intl.DateTimeFormat('en-US', {
         day: "2-digit",
         month: "long",
         year: "numeric",
@@ -29,7 +29,13 @@ if ($card) {
     $card.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {
             const id = event.target.dataset.id;
-            fetch('card/remove/' + id, {method: 'delete'})
+            const csrf = event.target.dataset.csrf
+            fetch('card/remove/' + id, {
+                method: 'delete',
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
+            })
                 .then(res => res.json())
                 .then(card => {
                     if (card.courses.length) {
@@ -40,7 +46,7 @@ if ($card) {
                 <td>${c.price}</td>
                 <td>${c.count}</td>
                 <td>
-                    <button class="btn btm-small js-remove" data-id="${c.id}">Удалить</button>
+                    <button class="btn btm-small js-remove" data-id="${c.id}" data-csrf="${csrf}">Удалить</button>
                 </td>
                            `
                         }).join('');
@@ -53,3 +59,5 @@ if ($card) {
         }
     })
 }
+
+M.Tabs.init(document.querySelectorAll('.tabs'));
