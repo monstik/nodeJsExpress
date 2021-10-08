@@ -1,40 +1,39 @@
 const {Router} = require("express");
 const Order = require("../models/orders");
+const auth = require("../middleware/auth");
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-    const orders = await Order.find({
-        userId: req.user._id,
-    }).populate('user.userId');
-    console.log(orders.map(item => ({
-        id: item._id,
-        userName: item.user.userId.name,
-        courses: {...item.courses},
-        price: item.courses.reduce((total, course) => {
-            return total += course.count * course.course.price;
-        }, 0)
-
-    })));
+router.get('/', auth, async (req, res) => {
+    try {
+        const orders = await Order.find({
+            'user.userId': req.user._id,
+        }).populate('user.userId');
 
 
-    res.render('orders', {
-        title: 'Заказы',
-        isOrders: true,
-        orders: orders.map(item => ({
-            id: item._id,
-            date: item.date,
-            userName: item.user.userId.name,
-            courses: {...item.courses},
-            price: item.courses.reduce((total, course) => {
-                return total += course.count * course.course.price;
-            }, 0),
-        }))
-    });
+
+        res.render('orders', {
+            title: 'Заказы',
+            isOrders: true,
+            orders: orders.map(item => ({
+                id: item._id,
+                date: item.date,
+                userName: item.user.userId.name,
+                courses: {...item.courses},
+                price: item.courses.reduce((total, course) => {
+                    return total += course.count * course.course.price;
+                }, 0),
+            }))
+        });
+
+
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const user = await req.user.populate('cart.items.courseId')
 
     const courses = user.cart.items.map(item => ({
@@ -42,7 +41,6 @@ router.post('/', async (req, res) => {
         count: item.count,
     }))
 
-    console.log(courses);
     const order = await Order({
         courses: courses,
         user: {

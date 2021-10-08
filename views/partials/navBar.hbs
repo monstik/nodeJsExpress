@@ -16,27 +16,42 @@
             {{/if}}
             <a href="/courses">Курсы</a>
         </li>
-            {{#if isAdd}}
-            <li class="active">
+            {{#if isAuth}}
+                {{#if isAdd}}
+                <li class="active">
+                {{else}}
+                <li>
+                {{/if}}
+                <a href="/add">Добавить курс</a>
+            </li>
+                {{#if isCard}}
+                <li class="active">
+                {{else}}
+                <li>
+                {{/if}}
+                <a href="/card">Корзина</a>
+            </li>
+                {{#if isOrders}}
+                <li class="active">
+                {{else}}
+                <li>
+                {{/if}}
+                <a href="/orders">Заказы</a>
+            </li>
+                <li>
+                    <a href="/auth/logout">Выйти</a>
+                </li>
             {{else}}
-            <li>
+
+                {{#if isLogin}}
+                <li class="active">
+                {{else}}
+                <li>
+                {{/if}}
+                <a href="/auth/login">Войти</a>
+            </li>
             {{/if}}
-            <a href="/add">Добавить курс</a>
-        </li>
-            {{#if isCard}}
-            <li class="active">
-            {{else}}
-            <li>
-            {{/if}}
-            <a href="/card">Корзина</a>
-        </li>
-            {{#if isOrders}}
-            <li class="active">
-            {{else}}
-            <li>
-            {{/if}}
-            <a href="/orders">Заказы</a>
-        </li>
+
 
         </ul>
     </div>
